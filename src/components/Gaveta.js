@@ -4,6 +4,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import Home from "../pages/Home"; // Certifique-se de ajustar o caminho com base na sua estrutura de arquivos
 import Login from "../pages/Login";
 import Atividades from "../pages/Atividades";
+import NovaAtividade from "../pages/NovaAtividade";
 
 const Drawer = createDrawerNavigator();
 
@@ -14,6 +15,7 @@ export default function Gaveta() {
         <Drawer.Screen name="Home" component={Home} />
         <Drawer.Screen name="Login" component={Login} />
         <Drawer.Screen name="Atividades" component={Atividades} />
+        <Drawer.Screen name="Add Activites" component={NovaAtividade} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

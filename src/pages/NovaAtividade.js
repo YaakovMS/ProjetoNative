@@ -1,11 +1,11 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 
-export default function Home() {
+export default function NovaAtividade() {
   return (
     <View style={styles.container}>
       <View style={styles.centeredItem}>
-      <Text>Welcome Home </Text>
+      <Text>Adicionar novas atividades </Text>
       </View>
     </View>
   );
