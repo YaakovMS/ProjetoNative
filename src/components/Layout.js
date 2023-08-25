@@ -1,11 +1,11 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import Layout from "./src/components/Layout";
+import { View, Text, StyleSheet } from "react-native"; // Import StyleSheet
+import Gaveta from "./Gaveta";
 
-export default function App() {
+export default function Layout() {
   return (
     <View style={styles.container}>
-      <Layout />
+      <Gaveta />
     </View>
   );
 }
