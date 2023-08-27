@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, Alert } from 'react-native';
-import { Input, Text, Icon } from 'react-native-elements';
-import { Button } from '@rneui/themed';
+import React, { useState } from "react";
+import { View, StyleSheet, ScrollView } from "react-native";
+import { Text, Icon } from "react-native-elements";
+import { Button, Input } from "@rneui/themed";
+import { useAuth } from "../context/AuthContext";
 
 export default function Login({ navigation }) {
+  const { registeredUser } = useAuth(); // Use the context hook
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [erroEmail, setErroEmail] = useState(null);
   const [erroPassword, setErroPassword] = useState(null);
+  const [loginError, setLoginError] = useState(null);
 
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i; // Basic email validation
 
@@ -35,10 +38,15 @@ export default function Login({ navigation }) {
     }
 
     if (!erro) {
-      console.log('Logado');
-      console.log('Email usado:', email);
-      console.log('Senha usado:', password);
-      navigation.navigate('Home');
+      // Simulate login using registeredUser data
+      if (registeredUser && registeredUser.email === email && registeredUser.password === password) {
+        console.log('Logado');
+        console.log('Email usado:', email);
+        console.log('Senha usado:', password);
+        navigation.navigate('Home');
+      } else {
+        setLoginError("Credenciais inválidas"); // Invalid login credentials
+      }
     }
   };
 
@@ -83,6 +91,10 @@ export default function Login({ navigation }) {
           inputStyle={[styles.input, { color: blueColor }]} // Cor azul
           errorMessage={erroPassword}
         />
+
+        {/* Display login error message */}
+        {loginError && <Text style={styles.errorMessage}>{loginError}</Text>}
+
         <Button
           title="Entrar"
           loading={false}
@@ -136,5 +148,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '50%',
   },
+  errorMessage: {
+    color: 'red',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
 });
-

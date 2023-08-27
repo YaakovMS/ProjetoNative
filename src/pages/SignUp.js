@@ -4,8 +4,10 @@ import { SafeAreaView } from 'react-native';
 import { CheckBox, Text } from "react-native-elements";
 import { Button, Input } from "@rneui/themed";
 import { TextInputMask } from "react-native-masked-text";
+import { useAuth } from "../context/AuthContext"; // Import the context hook
 
 export default function SignUp({ navigation }) {
+  const { setRegisteredUser } = useAuth(); // Use the context hook
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -56,11 +58,18 @@ export default function SignUp({ navigation }) {
       erro = true;
     }
 
+    if (!isSelected) {
+      // Checkbox not selected
+      setErroConfirm("Você deve aceitar os termos de uso");
+      erro = true;
+    }
+
     return !erro;
   };
 
   const handleSignUp = () => {
     if (validar()) {
+      setRegisteredUser({ name, email, password }); // Store the user info in context
       console.log("Conta Nova");
       navigation.navigate("Login");
       console.log("Nome do novo user:", name);
@@ -159,4 +168,3 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
-
