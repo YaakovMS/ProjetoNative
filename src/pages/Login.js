@@ -10,6 +10,8 @@ export default function Login({ navigation }) {
   const entrar = () => {
     navigation.navigate('Home');
     console.log('Logado');
+    console.log('Email usado:', email )
+    console.log('Senha usado:', password )
   };
 
   const SignUp = () => {

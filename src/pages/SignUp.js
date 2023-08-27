@@ -1,114 +1,159 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
-import { Input, Text } from 'react-native-elements';
-import { Button } from '@rneui/themed';
+import React, { useState } from "react";
+import { View, StyleSheet, ScrollView } from "react-native";
+import { SafeAreaView } from 'react-native';
+import { CheckBox, Text } from "react-native-elements";
+import { Button, Input } from "@rneui/themed";
+import { TextInputMask } from "react-native-masked-text";
 
 export default function SignUp({ navigation }) {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isSelected, setSelected] = useState(false);
+  const [erroEmail, setErroEmail] = useState(null);
+  const [erroNome, setErroNome] = useState(null);
+  const [erroPassword, setErroPassword] = useState(null);
+  const [erroConfirm, setErroConfirm] = useState(null);
+
+  const validar = () => {
+    let erro = false;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email) {
+      setErroEmail("Preencha os campos corretamente");
+      erro = true;
+    } else if (!emailRegex.test(email)) {
+      setErroEmail("Digite um email válido");
+      erro = true;
+    } else {
+      setErroEmail(null);
+    }
+    if (!name) {
+      setErroNome("Preencha os campos corretamente");
+      erro = true;
+    } else {
+      setErroNome(null);
+    }
+    if (!password) {
+      setErroPassword("Preencha os campos corretamente");
+      erro = true;
+    } else {
+      setErroPassword(null);
+    }
+    if (!confirmPassword) {
+      setErroConfirm("Preencha os campos corretamente");
+      erro = true;
+    } else {
+      setErroConfirm(null);
+    }
+
+    if (password !== confirmPassword) {
+      setErroConfirm("As senhas não são iguais");
+      erro = true;
+    }
+
+    return !erro;
+  };
 
   const handleSignUp = () => {
-    // Aqui você pode adicionar a lógica para lidar com o cadastro do usuário
-    console.log('Conta Nova')
-    navigation.navigate('Login');
+    if (validar()) {
+      console.log("Conta Nova");
+      navigation.navigate("Login");
+      console.log("Nome do novo user:", name);
+      console.log("Email Novo", email);
+      console.log("Senha Nova:", password);
+    }
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text h3 style={[styles.heading, { color: '#2196F3' }]}>
-        Create an Account
-      </Text>
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+        <Text h3 style={[styles.heading, { color: "#2196F3" }]}>
+          Tell me who are you
+        </Text>
 
-      <View style={styles.form}>
-        <Input
-          placeholder="Name"
-          leftIcon={{
-            type: 'font-awesome',
-            name: 'user',
-            color: '#2196F3',
-          }}
-          onChangeText={setName}
-          inputStyle={styles.input}
-        />
-        <Input
-          placeholder="Email"
-          keyboardType="email-address"
-          leftIcon={{
-            type: 'font-awesome',
-            name: 'envelope',
-            color: '#2196F3',
-          }}
-          onChangeText={setEmail}
-          inputStyle={styles.input}
-        />
-        <Input
-          placeholder="Password"
-          leftIcon={{
-            type: 'font-awesome',
-            name: 'lock',
-            color: '#2196F3',
-          }}
-          onChangeText={setPassword}
-          secureTextEntry
-          inputStyle={styles.input}
-        />
-        <Input
-          placeholder="Confirm Password"
-          leftIcon={{
-            type: 'font-awesome',
-            name: 'lock',
-            color: '#2196F3',
-          }}
-          onChangeText={setConfirmPassword}
-          secureTextEntry
-          inputStyle={styles.input}
-        />
-        <Button
-          title="Create Account"
-          loading={false}
-          loadingProps={{ size: 'small', color: 'white' }}
-          buttonStyle={styles.signupButton}
-          titleStyle={styles.signupButtonText}
-          containerStyle={styles.signupButtonContainer}
-          onPress={handleSignUp}
-        />
-      </View>
-    </ScrollView>
+        <View style={styles.form}>
+          <Input
+            placeholder="Name"
+            onChangeText={setName}
+            inputStyle={styles.input}
+            errorMessage={erroNome}
+          />
+          <Input
+            placeholder="Email"
+            keyboardType="email-address"
+            onChangeText={setEmail}
+            inputStyle={styles.input}
+            errorMessage={erroEmail}
+          />
+          <Input
+            placeholder="Password"
+            onChangeText={setPassword}
+            inputStyle={styles.input}
+            errorMessage={erroPassword}
+            secureTextEntry
+          />
+          <Input
+            placeholder="Confirm Password"
+            onChangeText={setConfirmPassword}
+            inputStyle={styles.input}
+            errorMessage={erroConfirm}
+            secureTextEntry
+          />
+          <CheckBox
+            title={"Eu aceito os termos de uso"}
+            checkedIcon="check"
+            uncheckedIcon="square-o"
+            uncheckedColor="#dcdcdc"
+            checkedColor="#2196F3"
+            checked={isSelected}
+            onPress={() => setSelected(!isSelected)}
+          />
+          <Button
+            title="Sign Up"
+            loading={false}
+            loadingProps={{ size: "small", color: "white" }}
+            buttonStyle={styles.signupButton}
+            titleStyle={styles.signupButtonText}
+            onPress={handleSignUp}
+          />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  scrollViewContainer: {
     flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
+    justifyContent: "center",
+    alignItems: "center",
     paddingVertical: 40,
   },
   heading: {
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
   form: {
-    width: '80%',
+    width: "80%",
   },
   input: {
     marginBottom: 15,
-    color: '#2196F3', // Adicione esta linha para definir a cor do texto do input
+    color: "#2196F3",
   },
   signupButton: {
-    backgroundColor: '#2196F3',
+    backgroundColor: "#2196F3",
     borderRadius: 5,
+    width: "100%", // Make the button full width
   },
   signupButtonText: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 18,
   },
-  signupButtonContainer: {
-    marginTop: 20,
-    alignSelf: 'center',
-    width: '50%',
-  },
 });
+
