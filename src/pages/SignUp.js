@@ -36,7 +36,10 @@ export default function SignUp({ navigation }) {
       setErroNome(null);
     }
     if (!password) {
-      setErroPassword("Preencha os campos corretamente");
+      setErroPassword("Preencha o campo de senha");
+      erro = true;
+    } else if (password.length < 6) {
+      setErroPassword("A senha deve ter pelo menos 6 caracteres");
       erro = true;
     } else {
       setErroPassword(null);

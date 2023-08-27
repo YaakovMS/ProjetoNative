@@ -1,17 +1,45 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, Alert } from 'react-native';
 import { Input, Text, Icon } from 'react-native-elements';
 import { Button } from '@rneui/themed';
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [erroEmail, setErroEmail] = useState(null);
+  const [erroPassword, setErroPassword] = useState(null);
+
+  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i; // Basic email validation
 
   const entrar = () => {
-    navigation.navigate('Home');
-    console.log('Logado');
-    console.log('Email usado:', email )
-    console.log('Senha usado:', password )
+    let erro = false;
+
+    if (!email) {
+      setErroEmail("Preencha o campo de email");
+      erro = true;
+    } else if (!emailRegex.test(email)) {
+      setErroEmail("Digite um email válido");
+      erro = true;
+    } else {
+      setErroEmail(null);
+    }
+
+    if (!password) {
+      setErroPassword("Preencha o campo de senha");
+      erro = true;
+    } else if (password.length < 6) {
+      setErroPassword("A senha deve ter pelo menos 6 caracteres");
+      erro = true;
+    } else {
+      setErroPassword(null);
+    }
+
+    if (!erro) {
+      console.log('Logado');
+      console.log('Email usado:', email);
+      console.log('Senha usado:', password);
+      navigation.navigate('Home');
+    }
   };
 
   const SignUp = () => {
@@ -23,7 +51,7 @@ export default function Login({ navigation }) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text h3 style={[styles.heading, { color: blueColor }]}>
-        Welcome back!
+        Bem-vindo de volta!
       </Text>
 
       <View style={styles.form}>
@@ -39,9 +67,10 @@ export default function Login({ navigation }) {
           }
           onChangeText={(value) => setEmail(value)}
           inputStyle={[styles.input, { color: blueColor }]} // Cor azul
+          errorMessage={erroEmail}
         />
         <Input
-          placeholder="Password"
+          placeholder="Senha"
           leftIcon={
             <Icon
               type="font-awesome"
@@ -52,9 +81,10 @@ export default function Login({ navigation }) {
           onChangeText={(value) => setPassword(value)}
           secureTextEntry={true}
           inputStyle={[styles.input, { color: blueColor }]} // Cor azul
+          errorMessage={erroPassword}
         />
         <Button
-          title="Log in"
+          title="Entrar"
           loading={false}
           loadingProps={{ size: 'small', color: 'white' }}
           buttonStyle={[styles.loginButton, { backgroundColor: blueColor }]} // Cor azul
@@ -63,7 +93,7 @@ export default function Login({ navigation }) {
           onPress={() => entrar()}
         />
         <Button
-          title="Sign Up"
+          title="Criar Conta"
           loading={false}
           loadingProps={{ size: 'small', color: 'white' }}
           buttonStyle={[styles.loginButton, { backgroundColor: blueColor }]} // Cor azul
@@ -107,3 +137,4 @@ const styles = StyleSheet.create({
     width: '50%',
   },
 });
+
