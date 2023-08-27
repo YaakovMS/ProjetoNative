@@ -1,12 +1,15 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import Layout from "./src/components/Layout";
+import { NavigationContainer } from "@react-navigation/native"; // Importe o NavigationContainer
+import Gaveta from "./src/components/Gaveta";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Layout />
-    </View>
+    <NavigationContainer> 
+      <View style={styles.container}>
+        <Gaveta />
+      </View>
+    </NavigationContainer> 
   );
 }
 

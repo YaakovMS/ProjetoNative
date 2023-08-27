@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { Input, Text } from 'react-native-elements';
+import { Input, Text, Icon } from 'react-native-elements';
 import { Button } from '@rneui/themed';
 
 export default function Login({ navigation }) {
@@ -10,15 +9,18 @@ export default function Login({ navigation }) {
 
   const entrar = () => {
     navigation.navigate('Home');
+    console.log('Logado');
   };
 
   const SignUp = () => {
     navigation.navigate('SignUp');
-  }
+  };
+
+  const blueColor = '#2196F3'; // Cor azul
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text h3 style={styles.heading}>
+      <Text h3 style={[styles.heading, { color: blueColor }]}>
         Welcome back!
       </Text>
 
@@ -26,31 +28,43 @@ export default function Login({ navigation }) {
         <Input
           placeholder="Email"
           keyboardType="email-address"
-          leftIcon={{ type: 'font-awesome', name: 'envelope' }}
+          leftIcon={
+            <Icon
+              type="font-awesome"
+              name="envelope"
+              color={blueColor} // Cor azul
+            />
+          }
           onChangeText={(value) => setEmail(value)}
-          style={styles.input}
+          inputStyle={[styles.input, { color: blueColor }]} // Cor azul
         />
         <Input
           placeholder="Password"
-          leftIcon={{ type: 'font-awesome', name: 'lock' }}
+          leftIcon={
+            <Icon
+              type="font-awesome"
+              name="lock"
+              color={blueColor} // Cor azul
+            />
+          }
           onChangeText={(value) => setPassword(value)}
           secureTextEntry={true}
-          style={styles.input}
+          inputStyle={[styles.input, { color: blueColor }]} // Cor azul
         />
         <Button
           title="Log in"
           loading={false}
           loadingProps={{ size: 'small', color: 'white' }}
-          buttonStyle={styles.loginButton}
+          buttonStyle={[styles.loginButton, { backgroundColor: blueColor }]} // Cor azul
           titleStyle={styles.loginButtonText}
           containerStyle={styles.loginButtonContainer}
           onPress={() => entrar()}
         />
-         <Button
+        <Button
           title="Sign Up"
           loading={false}
           loadingProps={{ size: 'small', color: 'white' }}
-          buttonStyle={styles.loginButton}
+          buttonStyle={[styles.loginButton, { backgroundColor: blueColor }]} // Cor azul
           titleStyle={styles.loginButtonText}
           containerStyle={styles.loginButtonContainer}
           onPress={() => SignUp()}
@@ -79,7 +93,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   loginButton: {
-    backgroundColor: '#2196F3',
     borderRadius: 5,
   },
   loginButtonText: {
