@@ -6,6 +6,8 @@ import Login from "../pages/Login";
 import Atividades from "../pages/Atividades";
 import NovaAtividade from "../pages/NovaAtividade";
 
+import SignUp from "../pages/SignUp";
+
 const Drawer = createDrawerNavigator();
 
 export default function Gaveta() {
@@ -16,6 +18,7 @@ export default function Gaveta() {
         <Drawer.Screen name="Login" component={Login} />
         <Drawer.Screen name="Atividades" component={Atividades} />
         <Drawer.Screen name="Add Activites" component={NovaAtividade} />
+        <Drawer.Screen name="SignUp" component={SignUp} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
