@@ -70,6 +70,7 @@ export default function SignUp({ navigation }) {
   const handleSignUp = () => {
     if (validar()) {
       setRegisteredUser({ name, email, password }); // Store the user info in context
+
       console.log("Conta Nova");
       navigation.navigate("Login");
       console.log("Nome do novo user:", name);
