@@ -9,13 +9,17 @@ import { useAuth } from "../context/AuthContext";
 const GavetaStyle = (props) => {
   const { registeredUser, user } = useAuth();
   
+  // Add a conditional check to prevent accessing properties of null
+  const userName = registeredUser ? registeredUser.name : "";
+  const userEmail = registeredUser ? registeredUser.email : "";
+  
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props} contentContainerStyle={{ backgroundColor: "rgba(33, 150, 243, 0.8)" }}>
         <ImageBackground source={require('../../assets/menu.png')} style={{ padding: 20 }}>
           <Image source={require('../../assets/user.png')} style={{ height: 80, width: 80, borderRadius: 30, marginBottom: 10 }}></Image>
-          <Text style={{ color: '#fff', fontSize: 20 }}>{registeredUser.name}</Text>
-          <Text style={{ color: '#fff', fontSize: 15 }}>{registeredUser.email}</Text>
+          <Text style={{ color: '#fff', fontSize: 20 }}>{userName}</Text>
+          <Text style={{ color: '#fff', fontSize: 15 }}>{userEmail}</Text>
         </ImageBackground>
         <View style={{ flex: 1, backgroundColor: '#fff', paddingTop: 10 }}>
           <DrawerItemList {...props} />
