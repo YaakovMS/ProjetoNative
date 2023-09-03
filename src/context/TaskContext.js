@@ -10,7 +10,17 @@ export const TaskProvider = ({ children }) => {
   const [atividades, setAtividades] = useState([]);
 
   const cadastrarAtividade = (atividade) => {
-    setAtividades([...atividades, { id: Date.now(), atividade }]);
+    // Adicione a estrutura completa das atividades aqui
+    setAtividades([
+      ...atividades,
+      {
+        id: Date.now(),
+        titulo: atividade.titulo,
+        descricao: atividade.descricao,
+        data: atividade.data,
+        prioridade: atividade.prioridade,
+      },
+    ]);
   };
 
   const value = {

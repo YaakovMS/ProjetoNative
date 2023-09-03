@@ -15,14 +15,30 @@ function Atividades() {
           data={atividades}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <View style={styles.atividadeItem}>
-              <Text>{item.atividade}</Text>
+            <View style={[styles.atividadeItem, { borderColor: getBorderColor(item.prioridade) }]}>
+              <Text style={styles.tituloAtividade}>Título: {item.titulo}</Text>
+              <Text style={styles.descricaoAtividade}>Descrição: {item.descricao}</Text>
+              <Text>Data: {item.data}</Text>
+              <Text>Prioridade: {item.prioridade}</Text>
             </View>
           )}
         />
       )}
     </View>
   );
+}
+
+function getBorderColor(prioridade) {
+  switch (prioridade) {
+    case 'baixa':
+      return 'green';
+    case 'media':
+      return 'yellow';
+    case 'alta':
+      return 'red';
+    default:
+      return 'gray';
+  }
 }
 
 const styles = StyleSheet.create({
@@ -40,8 +56,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     padding: 10,
     borderWidth: 1,
-    borderColor: 'gray',
     borderRadius: 5,
+  },
+  tituloAtividade: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  descricaoAtividade: {
+    fontStyle: 'italic',
   },
 });
 
