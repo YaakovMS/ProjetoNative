@@ -1,14 +1,26 @@
-import React from "react";
-import { View, Text } from "react-native";
-import { StyleSheet } from "react-native";
+import React from 'react';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { useTasks } from '../context/TaskContext';
 
+function Atividades() {
+  const { atividades } = useTasks();
 
-export default function Atividades() {
   return (
     <View style={styles.container}>
-      <View style={styles.centeredItem}>
-      <Text>Suas Atividades </Text>
-      </View>
+      <Text style={styles.titulo}>Atividades Criadas</Text>
+      {atividades.length === 0 ? (
+        <Text>Nenhuma atividade criada.</Text>
+      ) : (
+        <FlatList
+          data={atividades}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <View style={styles.atividadeItem}>
+              <Text>{item.atividade}</Text>
+            </View>
+          )}
+        />
+      )}
     </View>
   );
 }
@@ -16,10 +28,21 @@ export default function Atividades() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
   },
-  centeredItem: {
-    // Estilos para o item centralizado
+  titulo: {
+    fontSize: 20,
+    marginBottom: 20,
+  },
+  atividadeItem: {
+    marginBottom: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 5,
   },
 });
+
+export default Atividades;

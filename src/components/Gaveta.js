@@ -9,6 +9,7 @@ import NovaAtividade from "../pages/NovaAtividade";
 import SignUp from "../pages/SignUp";
 import Perfil from "../pages/Perfil";
 import GavetaStyle from "./GavetaStyle";
+import { TaskProvider } from "../context/TaskContext";
 
 const Drawer = createDrawerNavigator();
 
@@ -16,6 +17,7 @@ export default function Gaveta() {
   const iconColor = "#2196F3"; // Cor azul
   const selectedTextColor = "#fff";
   return (
+    <TaskProvider>
     <Drawer.Navigator
       initialRouteName="Main"
       drawerContent={(props) => <GavetaStyle {...props} />}
@@ -122,5 +124,6 @@ export default function Gaveta() {
         }}
       />
     </Drawer.Navigator>
+    </TaskProvider>
   );
 }

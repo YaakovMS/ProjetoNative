@@ -1,12 +1,28 @@
-import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { useTasks } from '../context/TaskContext';
 
-export default function NovaAtividade() {
+function NovaAtividade() {
+  const { cadastrarAtividade } = useTasks();
+  const [atividade, setAtividade] = useState('');
+
+  const handleCadastro = () => {
+    if (atividade.trim() !== '') {
+      cadastrarAtividade(atividade);
+      setAtividade('');
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.centeredItem}>
-      <Text>Adicionar novas atividades </Text>
-      </View>
+      <Text style={styles.label}>Cadastro de Atividade</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Digite a atividade"
+        value={atividade}
+        onChangeText={(text) => setAtividade(text)}
+      />
+      <Button title="Cadastrar" onPress={handleCadastro} />
     </View>
   );
 }
@@ -14,10 +30,23 @@ export default function NovaAtividade() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
   },
-  centeredItem: {
-    // Estilos para o item centralizado
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingLeft: 10,
   },
+  label: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  // Adicione outros estilos conforme necessário
 });
+
+export default NovaAtividade;
