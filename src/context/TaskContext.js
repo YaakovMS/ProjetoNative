@@ -10,7 +10,6 @@ export const TaskProvider = ({ children }) => {
   const [atividades, setAtividades] = useState([]);
 
   const cadastrarAtividade = (atividade) => {
-    // Adicione a estrutura completa das atividades aqui
     setAtividades([
       ...atividades,
       {
@@ -19,13 +18,25 @@ export const TaskProvider = ({ children }) => {
         descricao: atividade.descricao,
         data: atividade.data,
         prioridade: atividade.prioridade,
+        done: false, // Initialize done property as false
       },
     ]);
+  };
+
+  const markAsDone = (taskId) => {
+    const updatedAtividades = atividades.map((atividade) => {
+      if (atividade.id === taskId) {
+        return { ...atividade, done: true };
+      }
+      return atividade;
+    });
+    setAtividades(updatedAtividades);
   };
 
   const value = {
     atividades,
     cadastrarAtividade,
+    markAsDone, // Include markAsDone in the context value
   };
 
   return (

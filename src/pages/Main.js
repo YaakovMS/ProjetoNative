@@ -13,7 +13,7 @@ export default function Main({ navigation }) {
         <View style={styles.overlay} />
       </ImageBackground>
       <View style={styles.bottomContent}>
-        <Text style={styles.text}>Main Page</Text>
+     
         <Button
           title="Touch to start"
           onPress={goToLoginPage}

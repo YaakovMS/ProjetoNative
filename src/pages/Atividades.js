@@ -1,28 +1,65 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { useTasks } from '../context/TaskContext';
+import { useNavigation } from '@react-navigation/native';
 
 function Atividades() {
-  const { atividades } = useTasks();
+  const { atividades, markAsDone } = useTasks();
+  const navigation = useNavigation();
+
+  const renderItem = ({ item }) => {
+    const borderColor = getBorderColor(item.prioridade);
+
+    return (
+      <View style={[styles.atividadeItem, { borderColor }]}>
+        {item.done ? (
+          <Text style={styles.doneText}>Done</Text>
+        ) : (
+          <TouchableOpacity
+            style={styles.doneButton}
+            onPress={() => markAsDone(item.id)}
+          >
+            <Icon name="check" size={20} color="green" />
+          </TouchableOpacity>
+        )}
+        <Text style={[styles.tituloAtividade, { color: '#2196F3' }]}>{item.titulo}</Text>
+        <Text style={[styles.descricaoAtividade, { color: '#2196F3' }]}>Descrição: {item.descricao}</Text>
+        <Text style={[styles.dataAtividade, { color: '#2196F3' }]}>Data: {item.data}</Text>
+        <Text style={[styles.prioridadeAtividade, { color: '#2196F3' }]}>Prioridade: {item.prioridade}</Text>
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Atividades Criadas</Text>
       {atividades.length === 0 ? (
-        <Text style={styles.semAtividades}>Nenhuma atividade criada.</Text>
+        <View style={[styles.centeredContainer, { flex: 1 }]}>
+          <Text style={[styles.titulo, { color: '#2196F3' }]}>Atividades Criadas</Text>
+          <Text style={[styles.semAtividades, { color: '#2196F3' }]}>Nenhuma atividade criada.</Text>
+          <TouchableOpacity
+            style={styles.adicionarButton}
+            onPress={() => navigation.navigate('NovaAtividade')}
+          >
+            <Text style={styles.adicionarButtonText}>Adicionar Atividade</Text>
+          </TouchableOpacity>
+        </View>
       ) : (
-        <FlatList
-          data={atividades}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <View style={[styles.atividadeItem, { borderColor: getBorderColor(item.prioridade) }]}>
-              <Text style={styles.tituloAtividade}>{item.titulo}</Text>
-              <Text style={styles.descricaoAtividade}>Descrição: {item.descricao}</Text>
-              <Text style={styles.dataAtividade}>Data: {item.data}</Text>
-              <Text style={styles.prioridadeAtividade}>Prioridade: {item.prioridade}</Text>
-            </View>
-          )}
-        />
+        <>
+          <Text style={[styles.titulo, { color: '#2196F3' }]}>Atividades Criadas</Text>
+          <FlatList
+            data={atividades}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={renderItem}
+            contentContainerStyle={styles.listaAtividades}
+          />
+          <TouchableOpacity
+            style={styles.adicionarButton}
+            onPress={() => navigation.navigate('NovaAtividade')}
+          >
+            <Text style={styles.adicionarButtonText}>Adicionar Atividade!!</Text>
+          </TouchableOpacity>
+        </>
       )}
     </View>
   );
@@ -47,15 +84,37 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
   },
+  centeredContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   titulo: {
     fontSize: 24,
     fontWeight: 'bold',
+    color: '#2196F3',
     marginBottom: 20,
+    marginTop: 30,
+    justifyContent: 'center',
+  },
+  adicionarButton: {
+    backgroundColor: '#2196F3',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginBottom: 20,
+    marginTop: 75,
+  },
+  adicionarButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
   semAtividades: {
     fontSize: 18,
     fontStyle: 'italic',
     textAlign: 'center',
+  },
+  listaAtividades: {
+    flexGrow: 1,
   },
   atividadeItem: {
     marginBottom: 20,
@@ -78,6 +137,17 @@ const styles = StyleSheet.create({
   prioridadeAtividade: {
     fontSize: 16,
     marginTop: 5,
+  },
+  doneButton: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
+  },
+  doneText: {
+    fontSize: 16,
+    marginTop: 5,
+    color: 'green',
+    fontWeight: 'bold',
   },
 });
 
