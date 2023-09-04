@@ -10,6 +10,7 @@ import SignUp from "../pages/SignUp";
 import Perfil from "../pages/Perfil";
 import GavetaStyle from "./GavetaStyle";
 import { TaskProvider } from "../context/TaskContext";
+import { color } from "@rneui/base";
 
 const Drawer = createDrawerNavigator();
 
@@ -51,6 +52,7 @@ export default function Gaveta() {
           name="Home"
           component={Home}
           options={{
+            headerShown :true,
             title: "Home",
             drawerIcon: ({ focused, color, size }) => (
               <Icon name="home" type="font-awesome" color="#2196F3" size={size} />
@@ -63,6 +65,7 @@ export default function Gaveta() {
           name="Atividades"
           options={{
             title: "Atividades",
+            headerShown :true,
             drawerIcon: ({ focused, color, size }) => (
               <Icon name="list" type="font-awesome" color="#2196F3" size={size} />
             ),
@@ -82,6 +85,8 @@ export default function Gaveta() {
           name="NovaAtividade"
           component={NovaAtividade}
           options={{
+            headerShown :true,
+            headerLargeTitleStyle : { color: '#fff' },
             title: "Nova Atividade",
             drawerIcon: ({ focused, color, size }) => (
               <Icon name="plus" type="font-awesome" color="#2196F3" size={size} />

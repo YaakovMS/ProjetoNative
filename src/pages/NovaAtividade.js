@@ -36,6 +36,7 @@ function NovaAtividade() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      
       <Text style={[styles.label, { color: '#2196F3' }]}>Cadastro de Atividade</Text>
       <TextInput
         style={styles.input}
