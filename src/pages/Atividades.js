@@ -14,7 +14,9 @@ function Atividades() {
     return (
       <View style={[styles.atividadeItem, { borderColor }]}>
         {item.done ? (
-          <Text style={styles.doneText}>Done</Text>
+          <View style={styles.doneContainer}>
+            <Text style={styles.doneText}>Done</Text>
+          </View>
         ) : (
           <TouchableOpacity
             style={styles.doneButton}
@@ -23,10 +25,14 @@ function Atividades() {
             <Icon name="check" size={20} color="green" />
           </TouchableOpacity>
         )}
-        <Text style={[styles.tituloAtividade, { color: '#2196F3' }]}>{item.titulo}</Text>
-        <Text style={[styles.descricaoAtividade, { color: '#2196F3' }]}>Descrição: {item.descricao}</Text>
-        <Text style={[styles.dataAtividade, { color: '#2196F3' }]}>Data: {item.data}</Text>
-        <Text style={[styles.prioridadeAtividade, { color: '#2196F3' }]}>Prioridade: {item.prioridade}</Text>
+        {!item.done && (
+          <>
+            <Text style={[styles.tituloAtividade, { color: '#2196F3' }]}>{item.titulo}</Text>
+            <Text style={[styles.descricaoAtividade, { color: '#2196F3' }]}>Descrição: {item.descricao}</Text>
+            <Text style={[styles.dataAtividade, { color: '#2196F3' }]}>Data: {item.data}</Text>
+            <Text style={[styles.prioridadeAtividade, { color: '#2196F3' }]}>Prioridade: {item.prioridade}</Text>
+          </>
+        )}
       </View>
     );
   };
@@ -143,6 +149,10 @@ const styles = StyleSheet.create({
     top: 5,
     right: 5,
   },
+  doneContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   doneText: {
     fontSize: 16,
     marginTop: 5,
@@ -152,3 +162,4 @@ const styles = StyleSheet.create({
 });
 
 export default Atividades;
+
