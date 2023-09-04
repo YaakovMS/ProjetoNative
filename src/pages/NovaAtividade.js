@@ -19,8 +19,8 @@ function NovaAtividade() {
       return;
     }
 
-    if (titulo.length > 30) {
-      Alert.alert('Erro', 'O título deve ter no máximo 30 caracteres.');
+    if (titulo.length > 15) {
+      Alert.alert('Erro', 'O título deve ter no máximo 15 caracteres.');
       return;
     }
 
